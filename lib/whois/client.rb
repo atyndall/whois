@@ -92,8 +92,8 @@ module Whois
         if guess then
           @server = Server.guess(string)
         else
-          if settings.host then
-            @server = Server.factory(:override, '', settings.host)
+          if settings.has_key? :host then
+            @server = Server.factory(:override, '', settings[:host])
           else
             raise ServerNotFound, "Server not defined"
           end
