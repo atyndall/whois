@@ -86,10 +86,18 @@ module Whois
     #   client.query("google.com")
     #   # => #<Whois::Record>
     #
-    def query(object)
+    def query(object, guess = True)
       string = object.to_s.downcase
       Timeout::timeout(timeout) do
-        @server = Server.guess(string)
+        if guess then
+          @server = Server.guess(string)
+        else
+          if settings.host then
+            @server = Server.factory(:override, '', settings.host)
+          else
+            raise ServerNotFound, "Server not defined"
+          end
+        end
         @server.configure(settings)
         @server.lookup(string)
       end
