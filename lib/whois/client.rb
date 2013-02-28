@@ -86,7 +86,7 @@ module Whois
     #   client.query("google.com")
     #   # => #<Whois::Record>
     #
-    def query(object, guess = True)
+    def query(object, guess = true)
       string = object.to_s.downcase
       Timeout::timeout(timeout) do
         if guess then
